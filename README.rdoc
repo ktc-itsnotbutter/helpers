@@ -1,0 +1,31 @@
+= DESCRIPTION:
+Helper methods to be used in other cookbooks
+
+this is loaded at the start of base. Every cbook should have access to these methods
+
+
+= Methods:
+system_class::  returns the system type. One of: "xen-guest", "xen-host", "unknown-vm", "hardware"
+system_class?:: takes an argument and matches for you agains the types returned from system_class
+
+
+
+= Examples:
+basic if statement:
+  if system_class?("xen-guest")
+    # do something
+  end
+
+ 
+switch:
+  case system_class
+  when "xen-guest"
+    package_name "kernel-xen"
+  when "xen-host"
+    package_name "kernel-xen"
+  when "hardware"
+    package_name "kernel"
+  end
+
+
+
