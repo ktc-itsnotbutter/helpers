@@ -8,7 +8,11 @@ module Helpers
     # result is cached per run with a builtin timeout unless told otherwise 
     def find_repo_servers(cached=true)
       # NOTE: might want to add in environment based server resolution as well
-      repo_servers = node['yum']['repo']['servers']
+      repo_server = []
+      if node.has_key? 'yum' and node[:yum].has_key? 'repo' and node[:yum][:repo].has_key? 'servers'
+        repo_servers = node['yum']['repo']['servers'] 
+      end
+
       # return a cached result  
       if cached and helper_cache = get_helper_cache and helper_cache.has_key?(:repos) and helper_cache[:repos] != nil
         Chef::Log.debug "Repo Servers fetched from cache:  #{helper_cache[:repos]}"
@@ -52,7 +56,7 @@ module Helpers
       # if no servers found use fallback
       if repo_servers.blank?
         Chef::Log.info "No local repos servers found, falling back to defaults."
-        repo_servers  = node['yum']['repo']['servers_fallback']
+        repo_servers  = node['repo']['servers_fallback']
       end
 
       helper_cache.store(:repos, repo_servers, :expires => 60)
