@@ -56,8 +56,8 @@ module Helpers
       # if no servers found use fallback
       if repo_servers.blank?
         Chef::Log.info "No local repos servers found, falling back to defaults."
-        if node.has_key? 'repo' and node[:repo].has_key? "servers_fallback"
-          repo_servers  = node['repo']['servers_fallback']
+        if node.has_key? 'repo' and node[:repo].has_key? "fallback"
+          repo_servers  = node['repo']['fallback']
         else
           Chef::Log.info "No Fallback servers found"
           return []

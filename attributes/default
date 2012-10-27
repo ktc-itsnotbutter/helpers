@@ -1,3 +1,3 @@
 # fallback incase search fails 
 
-default['repo']['servers_fallback'] = [ "repo01.f00bar.com" ]
+default['repo']['fallback'] = [ "repo01.f00bar.com" ]
