@@ -27,12 +27,7 @@ end
 # Returns: Bool
 # Description:  Check if this is a yum supported platform
 def is_yum_platform
-  case self.node[:platform]
-  when "centos", "xenserver", "redhat"
-    true
-  else
-    false
-  end
+  node[:platform_family] == "rhel"
 end
 
 # Get the domain name
