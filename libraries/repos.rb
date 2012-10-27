@@ -9,8 +9,8 @@ module Helpers
     def find_repo_servers(cached=true)
       # NOTE: might want to add in environment based server resolution as well
       repo_server = []
-      if node.has_key? 'yum' and node[:yum].has_key? 'repo' and node[:yum][:repo].has_key? 'servers'
-        repo_servers = node['yum']['repo']['servers'] 
+      if node.has_key? 'repo' and node[:repo].has_key? 'servers'
+        repo_servers = node['repo']['servers'] 
       end
 
       # return a cached result  
@@ -56,7 +56,13 @@ module Helpers
       # if no servers found use fallback
       if repo_servers.blank?
         Chef::Log.info "No local repos servers found, falling back to defaults."
-        repo_servers  = node['repo']['servers_fallback']
+        if node.has_key? 'repo' and node[:repo].has_key? "servers_fallback"
+          repo_servers  = node['repo']['servers_fallback']
+        else
+          Chef::Log.info "No Fallback servers found"
+          return []
+        end
+        
       end
 
       helper_cache.store(:repos, repo_servers, :expires => 60)
