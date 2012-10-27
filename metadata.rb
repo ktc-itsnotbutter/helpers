@@ -5,4 +5,4 @@ description       "Installs/Configures helper methods / libs for recipes"
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version           "0.2.3"
 
-
+depends "chef_handler"
