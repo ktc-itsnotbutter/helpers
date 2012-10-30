@@ -69,6 +69,17 @@ module Helpers
       repo_servers
     end    
 
+    # simple method to assemble and repturn a list of servers into urls 
+    # for use with yum_repository url params
+    def assemble_urls( servers, repo_path, protocol="http://")
+      urls = ""
+      servers.each do |server|
+        Chef::Log.debug "Setting up Repo server: #{server}"
+        urls << "#{protocol}#{server}#{repo_path} \n"
+      end  
+      urls.chomp
+      urls
+    end
 
   end
 end
