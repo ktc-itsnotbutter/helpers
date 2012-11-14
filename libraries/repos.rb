@@ -3,8 +3,6 @@
 module Helpers
   module Repos
 
-    include Helpers::Search 
-
     # If we haven't set a server in attribs find one in this domain and use it.
     # Last resort use master repo
     # find the repo for wherever we are
@@ -84,5 +82,26 @@ module Helpers
       urls
     end
 
+    # This performs a search on the chef server but restricts results
+    # to only nodes that are also of the same scope. Where scope = env or domain
+    # This should be used for all searches as it maximizes the isolation
+    # of searches
+    def scoped_search(scope, *args, &block)
+      # extract the original query
+      query = args[1] || "*:*"
+
+      # prepend the environment to the query based on scope
+      case scope
+      when /domain/i,/dc/i
+        args[1] = "domain:#{node[:domain]}  AND (#{query})"
+      when /environment/, /env/i
+        args[1] = "chef_environment:#{node[:chef_environment]} AND (#{query})"
+      else
+        rasie ArgumentError  "restricted search does not know how to handle scope: #{scope} "
+      end
+
+      # call the original search method
+      search(*args, &block)
+    end
   end
 end
