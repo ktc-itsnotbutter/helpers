@@ -2,6 +2,9 @@
 #
 module Helpers
   module Repos
+
+    include Helpers::Search 
+
     # If we haven't set a server in attribs find one in this domain and use it.
     # Last resort use master repo
     # find the repo for wherever we are
