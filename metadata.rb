@@ -6,7 +6,6 @@ long_description  IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version           "1.0.1"
 
 depends "helpers-search"
-depends "helpers-node"
 depends "helpers-databags"
 depends "ruby-helper"
 
