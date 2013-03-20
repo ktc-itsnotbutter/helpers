@@ -14,10 +14,11 @@ module Helpers
         repo_servers = node['repo']['servers'] 
       end
 
+      node.run_state[:helper_cache] ||= Hash.new
       # return a cached result  
-      if cached and helper_cache = get_helper_cache and helper_cache.has_key?(:repos) and helper_cache[:repos] != nil
-        Chef::Log.debug "Repo Servers fetched from cache:  #{helper_cache[:repos]}"
-        repo_servers =  helper_cache[:repos]  
+      if cached and  node.run_state[:helper_cache].has_key?(:repos) and :node.run_state[:helper_cache][:repos] != nil
+        Chef::Log.debug "Repo Servers fetched from cache:  #{node.run_state[:helper_cache][:repos]}"
+        repo_servers =  node.run_state[:helper_cache][:repos]  
       end
 
       if repo_servers.blank?
@@ -66,7 +67,7 @@ module Helpers
         
       end
 
-      helper_cache.store(:repos, repo_servers, :expires => 60)
+      node.run_state[:helper_cache][:repos] = repo_servers
       repo_servers
     end    
 
