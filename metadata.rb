@@ -4,5 +4,5 @@ maintainer_email  "spheromak@gmail.com"
 license           "Apache 2"
 description       "Installs/Configures helper methods / libs for recipes"
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version           "0.3.1"
+version           "1.2.1"
 
