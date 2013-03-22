@@ -16,7 +16,7 @@ module Helpers
 
       node.run_state[:helper_cache] ||= Hash.new
       # return a cached result  
-      if cached and  node.run_state[:helper_cache].has_key?(:repos) and :node.run_state[:helper_cache][:repos] != nil
+      if cached and  node.run_state[:helper_cache].has_key?(:repos) and node.run_state[:helper_cache][:repos] != nil
         Chef::Log.debug "Repo Servers fetched from cache:  #{node.run_state[:helper_cache][:repos]}"
         repo_servers =  node.run_state[:helper_cache][:repos]  
       end
